@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+---
+
+<Base title="訂閱成功" description="電子報訂閱成功。" noindex>
+  <div class="container thanks">
+    <p class="eyebrow">電子報</p>
+    <div class="gold-rule" aria-hidden="true"></div>
+    <h1 class="thanks__title">收到了，謝謝你。</h1>
+    <p class="thanks__text">
+      信不常寄，所以每一封都值得等。哪天它出現在收件匣，希望你會想起撥接年代那一聲「<span lang="en" class="nowrap">You've got mail</span>」，心跳漏了半拍的那一瞬間。
+    </p>
+    <div class="thanks__action">
+      <Button href="/" block>回首頁</Button>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .thanks {
+    max-width: 560px;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    padding-block: 64px 96px;
+  }
+
+  .thanks .gold-rule {
+    width: 44px;
+  }
+
+  .thanks__title {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.4;
+    letter-spacing: 0.1em;
+  }
+
+  .thanks__text {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--color-body);
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  .thanks__action {
+    margin-top: 8px;
+  }
+
+  .thanks__action :global(.btn) {
+    min-width: 240px;
+  }
+</style>
