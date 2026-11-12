@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import FeaturedBook from '../components/FeaturedBook.astro';
+import BookCard from '../components/BookCard.astro';
+import ShelfPlaceholder from '../components/ShelfPlaceholder.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { getBooks, getFeatured, nextNo } from '../lib/books';
+import { SITE } from '../site.config';
+
+const books = await getBooks();
+const featured = getFeatured(books);
+---
+
+<Base description={SITE.about} nav="home">
+  <FeaturedBook book={featured} />
+
+  <section id="books" class="container shelf" aria-labelledby="books-title">
+    <div class="shelf__head">
+      <h2 id="books-title" class="section-title">書目</h2>
+      <p class="shelf__count">共 {books.length} 冊</p>
+    </div>
+    <div class="shelf__grid">
+      {books.map((book) => <BookCard book={book} />)}
+      <ShelfPlaceholder no={nextNo(books)} />
+    </div>
+  </section>
+
+  <section id="about" class="about" aria-labelledby="about-title">
+    <div class="container about__inner">
+      <h2 id="about-title" class="section-title">關於</h2>
+      <p class="about__text">{SITE.about}</p>
+    </div>
+  </section>
+
+  <NewsletterForm />
+</Base>
+
+<style>
+  .shelf {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding-block: 88px 96px;
+  }
+
+  .shelf__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .shelf__count {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--color-muted);
+  }
+
+  .shelf__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 48px 40px;
+  }
+
+  .about {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .about__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 72px;
+    align-items: baseline;
+    padding-block: 80px;
+  }
+
+  .about__inner h2 {
+    flex: 0 0 auto;
+  }
+
+  .about__text {
+    flex: 1 1 360px;
+    max-width: 36em;
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 2;
+    color: var(--color-about);
+  }
+</style>

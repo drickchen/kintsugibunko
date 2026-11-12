@@ -1,0 +1,115 @@
+---
+import Button from './Button.astro';
+import type { Book } from '../lib/books';
+
+interface Props {
+  buy: Book['data']['buy'];
+}
+const { buy } = Astro.props;
+const ebooks = buy.ebooks ? Object.entries(buy.ebooks) : [];
+---
+
+<section id="buy" class="buy" aria-labelledby="buy-title">
+  <h2 id="buy-title" class="buy__title">哪裡買</h2>
+  {buy.note && <p class="buy__note">{buy.note}</p>}
+  <div class="buy__links">
+    {
+      buy.links.map((l) => (
+        <Button href={l.href} variant={l.style} block>
+          {l.label}
+        </Button>
+      ))
+    }
+  </div>
+  {
+    ebooks.length > 0 && (
+      <p class="buy__ebooks">
+        <span>電子書</span>
+        {ebooks.map(([name, href]) => (
+          <a class="text-link" href={href}>
+            {name}
+          </a>
+        ))}
+      </p>
+    )
+  }
+  {
+    buy.crowdfunding && (
+      <p class="buy__crowd">
+        {buy.crowdfunding.note}
+        <a class="text-link" href={buy.crowdfunding.href}>
+          {buy.crowdfunding.label}
+        </a>
+      </p>
+    )
+  }
+</section>
+
+<style>
+  .buy {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scroll-margin-top: 24px;
+  }
+
+  .buy__title {
+    margin-bottom: 4px;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.5;
+    letter-spacing: 0.24em;
+  }
+
+  .buy__note {
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--color-body);
+  }
+
+  .buy__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .buy__ebooks {
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 16px;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  .buy__ebooks a,
+  .buy__crowd a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--color-muted);
+  }
+
+  .buy__ebooks a:hover,
+  .buy__crowd a:hover {
+    color: var(--color-gold-text);
+  }
+
+  .buy__crowd {
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 599px) {
+    .buy__ebooks,
+    .buy__crowd {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,41 @@
+---
+interface Props {
+  no: string;
+}
+const { no } = Astro.props;
+---
+
+<div class="shelf-slot" aria-hidden="true">
+  <div class="shelf-slot__frame"><span>No.{no}</span></div>
+  <p class="shelf-slot__line">下一本，還在裂開中。</p>
+</div>
+
+<style>
+  .shelf-slot {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .shelf-slot__frame {
+    aspect-ratio: 631 / 891;
+    margin-bottom: 4px;
+    border: 1px dashed var(--color-dash);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .shelf-slot__frame span {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    letter-spacing: 0.16em;
+    color: #8a8273;
+  }
+
+  .shelf-slot__line {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--color-muted);
+  }
+</style>

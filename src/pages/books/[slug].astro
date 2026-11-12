@@ -1,0 +1,171 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Cover from '../../components/Cover.astro';
+import BuyBlock from '../../components/BuyBlock.astro';
+import SpecTable from '../../components/SpecTable.astro';
+import TocList from '../../components/TocList.astro';
+import AlsoOnShelf from '../../components/AlsoOnShelf.astro';
+import { getBooks, byline, dateLabel, specRows, type Book } from '../../lib/books';
+
+export async function getStaticPaths() {
+  const books = await getBooks();
+  return books.map((book) => ({
+    params: { slug: book.id },
+    props: { book, others: books.filter((b) => b.id !== book.id) },
+  }));
+}
+
+interface Props {
+  book: Book;
+  others: Book[];
+}
+const { book, others } = Astro.props;
+const d = book.data;
+const { Content } = await render(book);
+const hasToc = d.toc.length > 0;
+---
+
+<Base
+  title={d.title}
+  description={d.description ?? d.hook}
+  ogImage={d.cover}
+  ogImageAlt={d.cover_alt}
+  ogType="book"
+>
+  <div class="book">
+    <div class="book__cover-panel">
+      <div class="book__cover">
+        <Cover src={d.cover} alt={d.cover_alt} width={300} sizes="(max-width: 899px) 224px, 300px" shadow="lg" eager />
+      </div>
+    </div>
+
+    <div class="book__body">
+      <header class="book__intro">
+        <p class="eyebrow book__kicker">No.{d.no}．{d.category}．{dateLabel(d.published)}</p>
+        <h1 class="book__title">{d.title}</h1>
+        <p class="book__byline">{byline(book)}</p>
+        <div class="gold-rule" aria-hidden="true"></div>
+        <p class="book__hook">{d.hook}</p>
+      </header>
+
+      <div class="book__prose">
+        <Content />
+      </div>
+
+      {hasToc && d.toc_placement === 'before-buy' && <TocList groups={d.toc} />}
+      <BuyBlock buy={d.buy} />
+      <SpecTable rows={specRows(book)} />
+      {hasToc && d.toc_placement === 'after-specs' && <TocList groups={d.toc} />}
+      <AlsoOnShelf books={others} />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .book {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  .book__cover-panel {
+    background: var(--color-panel);
+    padding: 40px var(--gutter) 36px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .book__cover {
+    width: 224px;
+  }
+
+  .book__body {
+    padding: 32px var(--gutter) 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    min-width: 0;
+  }
+
+  .book__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .book__kicker {
+    letter-spacing: 0.26em;
+  }
+
+  .book__title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+  }
+
+  .book__byline {
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+
+  .book__intro .gold-rule {
+    width: 44px;
+  }
+
+  .book__hook {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  .book__prose {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 15px;
+    line-height: 1.95;
+    color: var(--color-body);
+  }
+
+  /* 桌機：左欄封面、右欄文字 */
+  @media (min-width: 900px) {
+    .book {
+      display: grid;
+      grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
+      gap: 72px;
+      padding: 64px var(--gutter) 96px;
+      align-items: start;
+    }
+
+    .book__cover-panel {
+      position: sticky;
+      top: 40px;
+      padding: 56px 48px;
+    }
+
+    .book__cover {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .book__body {
+      padding: 8px 0 0;
+      max-width: 640px;
+      gap: 36px;
+    }
+
+    .book__hook {
+      font-size: 21px;
+      line-height: 1.7;
+    }
+
+    .book__prose {
+      font-size: 16px;
+      line-height: 1.9;
+    }
+  }
+</style>

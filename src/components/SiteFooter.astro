@@ -1,0 +1,93 @@
+---
+import { SITE } from '../site.config';
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="site-footer__name">{SITE.name}<span lang="en">{SITE.nameEn}</span></span>
+      <span>
+        © {SITE.year} {SITE.name}．<a class="site-footer__mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </span>
+    </div>
+    <nav aria-label="社群連結" class="site-footer__social">
+      {SITE.social.map((s) => <a href={s.href}>{s.label}</a>)}
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  /* 首頁的頁尾緊接在電子報色塊之後，不需要分隔線 */
+  :global(body:has(#letter)) .site-footer {
+    border-top: 0;
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px 40px;
+    padding-block: 44px 40px;
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--color-muted);
+  }
+
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .site-footer__name {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 12px;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    letter-spacing: 0.2em;
+    color: var(--color-ink);
+  }
+
+  .site-footer__name [lang='en'] {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--color-muted);
+  }
+
+  .site-footer__mail {
+    color: var(--color-muted);
+    text-decoration-color: var(--color-gold);
+    text-underline-offset: 4px;
+    /* 讓信箱在手機上也好點 */
+    display: inline-block;
+    padding-block: 10px;
+    margin-block: -10px;
+  }
+
+  .site-footer__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+    letter-spacing: 0.1em;
+  }
+
+  .site-footer__social a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    text-decoration: none;
+    color: var(--color-muted);
+  }
+
+  .site-footer__social a:hover,
+  .site-footer__mail:hover {
+    color: var(--color-gold-text);
+  }
+</style>

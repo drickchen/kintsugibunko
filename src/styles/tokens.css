@@ -1,0 +1,36 @@
+:root {
+  /* 顏色 */
+  --color-page: #faf8f3;        /* 頁面底色 */
+  --color-panel: #f2eee5;       /* 區塊底色：主視覺、電子報、書頁封面區 */
+  --color-ink: #1f1d1a;         /* 主要文字、深色按鈕 */
+  --color-body: #4f4a42;        /* 內文 */
+  --color-muted: #6b655b;       /* 次要文字 */
+  --color-rule: #e3ded4;        /* 分隔細線 */
+  --color-gold: #b08d4a;        /* 金色細線、箭頭、連結底線（裝飾用） */
+  --color-gold-text: #7e6128;   /* 金色文字：編號、小標籤，僅用於淺色底 */
+  --color-dash: #cfc6b4;        /* 書目空位虛線 */
+  --color-about: #3a3630;       /* 關於段落 */
+  --color-input-border: #bdb4a3;
+  --color-white: #ffffff;
+
+  /* 字體 */
+  --font-serif: 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
+  --font-sans: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+
+  /* 版面 */
+  --content-max: 1120px;
+  --gutter: 24px;
+  --tap: 44px;        /* 可點擊元素最小高度 */
+  --button-h: 48px;
+
+  /* 陰影：只用在封面 */
+  --shadow-cover-lg: 0 20px 44px rgba(31, 29, 26, 0.22);
+  --shadow-cover-md: 0 10px 24px rgba(31, 29, 26, 0.14);
+  --shadow-cover-sm: 0 6px 14px rgba(31, 29, 26, 0.12);
+}
+
+@media (max-width: 599px) {
+  :root {
+    --gutter: 22px;
+  }
+}

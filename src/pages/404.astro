@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+---
+
+<Base title="這一頁不見了" description="可能正在送修，描金需要一點時間。先回首頁，看看其他書吧。" nav="none" noindex>
+  <div class="container nf">
+    <div class="nf__num" aria-hidden="true">
+      <p>404</p>
+      <svg viewBox="0 0 240 112" preserveAspectRatio="none">
+        <path class="nf__gap" d="M-4 70 L96 52 L138 64 L244 34"></path>
+        <path class="nf__seam" d="M-4 70 L96 52 L138 64 L244 34"></path>
+      </svg>
+    </div>
+    <div class="gold-rule" aria-hidden="true"></div>
+    <h1 class="nf__title">這一頁不見了。</h1>
+    <p class="nf__text">可能正在送修，描金需要一點時間。先回首頁，看看其他書吧。</p>
+    <div class="nf__action">
+      <Button href="/" block>回首頁</Button>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .nf {
+    max-width: 560px;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    padding-block: 64px 96px;
+  }
+
+  .nf__num {
+    position: relative;
+    align-self: flex-start;
+  }
+
+  .nf__num p {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 112px;
+    line-height: 1;
+    letter-spacing: 0.06em;
+  }
+
+  .nf__num svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+  }
+
+  .nf__gap {
+    stroke: var(--color-page);
+    stroke-width: 6;
+  }
+
+  .nf__seam {
+    stroke: var(--color-gold);
+    stroke-width: 1.6;
+  }
+
+  .nf .gold-rule {
+    width: 44px;
+  }
+
+  .nf__title {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.4;
+    letter-spacing: 0.1em;
+  }
+
+  .nf__text {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--color-body);
+  }
+
+  .nf__action {
+    margin-top: 8px;
+  }
+
+  .nf__action :global(.btn) {
+    min-width: 240px;
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+import Mark from '../assets/brand/mark.svg';
+import Wordmark from '../assets/brand/word.svg';
+import { SITE } from '../site.config';
+
+interface Props {
+  href?: string;
+  size?: 'md' | 'sm';
+}
+const { href = '/', size = 'md' } = Astro.props;
+---
+
+<a class:list={['brand', `brand--${size}`]} href={href}>
+  <Mark class="brand__mark" aria-hidden="true" />
+  <Wordmark class="brand__word" role="img" aria-label={SITE.name} />
+  <span class="brand__en">{SITE.nameEn}</span>
+</a>
+
+<style>
+  .brand {
+    --mark: 30px;
+    --word-h: 19px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: var(--tap);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .brand:hover {
+    color: var(--color-ink);
+  }
+
+  .brand:hover .brand__en {
+    color: var(--color-gold-text);
+  }
+
+  .brand--sm {
+    --mark: 26px;
+    --word-h: 16px;
+    gap: 10px;
+  }
+
+  .brand__mark {
+    width: var(--mark);
+    height: var(--mark);
+    flex: none;
+  }
+
+  .brand__word {
+    height: var(--word-h);
+    width: auto;
+    flex: none;
+  }
+
+  .brand__en {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    color: var(--color-muted);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  @media (max-width: 599px) {
+    .brand {
+      --mark: 26px;
+      --word-h: 16px;
+      gap: 10px;
+    }
+
+    .brand__en {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+    }
+  }
+</style>

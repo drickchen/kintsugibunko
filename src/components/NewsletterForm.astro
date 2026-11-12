@@ -1,0 +1,133 @@
+---
+import { SITE } from '../site.config';
+---
+
+<section id="letter" class="letter" aria-labelledby="letter-title">
+  <div class="container letter__inner">
+    <div class="letter__intro">
+      <h2 id="letter-title" class="letter__title">{SITE.newsletter.title}</h2>
+      <p class="letter__lead">{SITE.newsletter.lead}</p>
+    </div>
+    <form
+      class="letter__form"
+      name="newsletter"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+    >
+      <input type="hidden" name="form-name" value="newsletter" />
+      <p class="visually-hidden" aria-hidden="true">
+        <label>請勿填寫這一欄 <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+      </p>
+      <div class="letter__field">
+        <label for="newsletter-email">電子信箱</label>
+        <input
+          id="newsletter-email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          inputmode="email"
+          placeholder="name@example.com"
+        />
+      </div>
+      <button type="submit">訂閱</button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .letter {
+    background: var(--color-panel);
+  }
+
+  .letter__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 56px;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-block: 56px;
+  }
+
+  .letter__intro {
+    flex: 1 1 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .letter__title {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.5;
+    letter-spacing: 0.2em;
+  }
+
+  .letter__lead {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--color-body);
+  }
+
+  .letter__form {
+    flex: 1 1 360px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  .letter__field {
+    flex: 1 1 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .letter__field label {
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 0.12em;
+    color: var(--color-muted);
+  }
+
+  .letter__field input {
+    min-height: var(--button-h);
+    padding: 0 14px;
+    border: 1px solid var(--color-input-border);
+    border-radius: 0;
+    background: var(--color-white);
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--color-ink);
+  }
+
+  .letter__field input::placeholder {
+    color: #8a8273;
+  }
+
+  .letter__field input:focus {
+    outline: 2px solid var(--color-gold-text);
+    outline-offset: 0;
+    border-color: var(--color-ink);
+  }
+
+  .letter__form button {
+    min-height: var(--button-h);
+    padding: 0 28px;
+    border: none;
+    border-radius: 0;
+    background: var(--color-ink);
+    color: var(--color-page);
+    font-family: inherit;
+    font-size: 15px;
+    letter-spacing: 0.16em;
+    cursor: pointer;
+  }
+
+  .letter__form button:hover {
+    background: #3a3630;
+  }
+</style>

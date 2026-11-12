@@ -1,0 +1,77 @@
+---
+import Logo from './Logo.astro';
+
+interface Props {
+  /** home：首頁錨點選單；book：只有「書目」；none：只有 logo */
+  nav?: 'home' | 'book' | 'none';
+}
+const { nav = 'book' } = Astro.props;
+
+const links =
+  nav === 'home'
+    ? [
+        { href: '#books', label: '書目' },
+        { href: '#about', label: '關於' },
+        { href: '#letter', label: '電子報' },
+      ]
+    : nav === 'book'
+      ? [{ href: '/#books', label: '書目' }]
+      : [];
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <Logo href={nav === 'home' ? '#top' : '/'} />
+    {
+      links.length > 0 && (
+        <nav aria-label="主選單" class="site-nav">
+          {links.map((l) => (
+            <a href={l.href}>{l.label}</a>
+          ))}
+        </nav>
+      )
+    }
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 24px;
+    padding-block: 18px;
+  }
+
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 32px;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+  }
+
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    text-decoration: none;
+  }
+
+  @media (max-width: 599px) {
+    .site-header__inner {
+      padding-block: 12px;
+    }
+
+    .site-nav {
+      gap: 0 28px;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+    }
+  }
+</style>

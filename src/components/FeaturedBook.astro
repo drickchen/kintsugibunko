@@ -1,0 +1,118 @@
+---
+import Cover from './Cover.astro';
+import Button from './Button.astro';
+import { bookUrl, dateLabel, type Book } from '../lib/books';
+
+interface Props {
+  book: Book;
+}
+const { book } = Astro.props;
+const d = book.data;
+const url = bookUrl(book);
+---
+
+<section id="top" class="hero" aria-labelledby="hero-title">
+  <div class="container hero__inner">
+    <div class="hero__cover">
+      <a href={url} tabindex="-1" aria-hidden="true">
+        <Cover src={d.cover} alt={d.cover_alt} width={300} sizes="(max-width: 400px) 80vw, 300px" shadow="lg" eager />
+      </a>
+    </div>
+    <div class="hero__text">
+      <p class="hero__kicker">新書．{dateLabel(d.published)}出版</p>
+      <h1 id="hero-title" class="hero__title">{d.title}</h1>
+      <div class="gold-rule" aria-hidden="true"></div>
+      <p class="hero__hook">{d.hook}</p>
+      {d.feature && <p class="hero__blurb">{d.feature.blurb}</p>}
+      {d.feature && <p class="hero__meta">{d.feature.meta}</p>}
+      <div class="hero__actions">
+        <Button href={url}>了解更多</Button>
+        <Button href={`${url}#buy`} variant="underline">到獨立書店訂購</Button>
+      </div>
+      {d.feature?.note && <p class="hero__note">{d.feature.note}</p>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: var(--color-panel);
+  }
+
+  .hero__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 48px 80px;
+    padding-block: 80px;
+  }
+
+  .hero__cover {
+    flex: 0 1 300px;
+    margin-inline: auto;
+  }
+
+  .hero__cover a {
+    display: block;
+    max-width: 300px;
+  }
+
+  .hero__text {
+    flex: 1 1 380px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero__kicker {
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 0.3em;
+    color: var(--color-gold-text);
+  }
+
+  .hero__title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: clamp(36px, 5vw, 54px);
+    line-height: 1.25;
+    letter-spacing: 0.08em;
+  }
+
+  .hero__hook {
+    font-family: var(--font-serif);
+    font-size: 21px;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+  }
+
+  .hero__blurb {
+    max-width: 30em;
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--color-body);
+  }
+
+  .hero__meta {
+    font-size: 14px;
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 28px;
+    margin-top: 8px;
+  }
+
+  .hero__note {
+    font-size: 13px;
+    line-height: 1.8;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,74 @@
+---
+import Cover from './Cover.astro';
+import { bookUrl, byline, year, type Book } from '../lib/books';
+
+interface Props {
+  book: Book;
+}
+const { book } = Astro.props;
+const d = book.data;
+const url = bookUrl(book);
+---
+
+<article class="book-card">
+  <a href={url} class="book-card__cover" tabindex="-1" aria-hidden="true">
+    <Cover src={d.cover} alt={`${d.title}書封`} width={260} sizes="(max-width: 520px) 90vw, 260px" />
+  </a>
+  <p class="eyebrow">No.{d.no}．{d.category}</p>
+  <h3 class="book-card__title"><a href={url}>{d.title}</a></h3>
+  <p class="book-card__meta">{byline(book)}．{year(d.published)}</p>
+  <p class="book-card__line">{d.shelf_line}</p>
+</article>
+
+<style>
+  .book-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .book-card__cover {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .book-card__title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+  }
+
+  .book-card__title a {
+    text-decoration: none;
+  }
+
+  /* 整張卡片都可以點 */
+  .book-card {
+    position: relative;
+  }
+
+  .book-card__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .book-card:hover .book-card__title a {
+    color: var(--color-gold-text);
+  }
+
+  .book-card__meta {
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .book-card__line {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--color-body);
+  }
+</style>

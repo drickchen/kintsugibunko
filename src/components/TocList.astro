@@ -1,0 +1,112 @@
+---
+import { toChineseNumeral } from '../lib/books';
+
+type Item = string | { label?: string; title: string; desc?: string };
+interface Props {
+  groups: { heading: string; items: Item[] }[];
+}
+const { groups } = Astro.props;
+
+const normalized = groups.map((g) => ({
+  heading: g.heading,
+  items: g.items.map((item, i) =>
+    typeof item === 'string'
+      ? { label: toChineseNumeral(i + 1), title: item, desc: undefined }
+      : { label: item.label ?? toChineseNumeral(i + 1), title: item.title, desc: item.desc },
+  ),
+}));
+const id = `toc-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<section class="book-section toc" aria-labelledby={id}>
+  {
+    normalized.map((g, gi) => (
+      <>
+        <h2 id={gi === 0 ? id : undefined} class="book-section__title">
+          {g.heading}
+        </h2>
+        <ol class="toc__list">
+          {g.items.map((item) => (
+            <li class:list={['toc__row', { 'toc__row--rich': item.desc }]}>
+              <span class="toc__label">{item.label}</span>
+              {item.desc ? (
+                <span class="toc__body">
+                  <span class="toc__title">{item.title}</span>
+                  <span class="toc__desc">{item.desc}</span>
+                </span>
+              ) : (
+                <span>{item.title}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </>
+    ))
+  }
+</section>
+
+<style>
+  /* 整個區塊共用一條欄線，讓「十一」和「圖版一」對齊 */
+  .toc {
+    display: grid;
+    grid-template-columns: minmax(3.2em, max-content) minmax(0, 1fr);
+    column-gap: 12px;
+  }
+
+  .toc > :global(h2) {
+    grid-column: 1 / -1;
+  }
+
+  .toc > :global(h2 + ol + h2) {
+    padding-top: 22px;
+  }
+
+  .toc__list {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .toc__row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--color-rule);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .toc__row--rich {
+    padding: 14px 0;
+  }
+
+  .toc__label {
+    font-family: var(--font-serif);
+    color: var(--color-gold-text);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .toc__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .toc__title {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .toc__desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--color-body);
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+import Cover from './Cover.astro';
+import { bookUrl, type Book } from '../lib/books';
+
+interface Props {
+  books: Book[];
+}
+const { books } = Astro.props;
+---
+
+{
+  books.length > 0 && (
+    <section class="also" aria-labelledby="also-title">
+      <h2 id="also-title" class="also__title">也在書架上</h2>
+      <ul class="also__list">
+        {books.map((b) => (
+          <li>
+            <a class="also__item" href={bookUrl(b)}>
+              <span class="also__cover">
+                <Cover src={b.data.cover} alt={`${b.data.title}書封`} width={76} shadow="sm" />
+              </span>
+              <span class="also__text">
+                <span class="eyebrow">No.{b.data.no}．{b.data.category}</span>
+                <span class="also__name">{b.data.title}</span>
+                <span class="also__line">{b.data.shelf_line}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .also {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .also__title {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.5;
+    letter-spacing: 0.24em;
+  }
+
+  .also__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .also__item {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    min-height: var(--tap);
+    text-decoration: none;
+  }
+
+  .also__cover {
+    flex: 0 0 76px;
+    width: 76px;
+  }
+
+  .also__text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .also__name {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+  }
+
+  .also__item:hover .also__name {
+    color: var(--color-gold-text);
+  }
+
+  .also__line {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--color-body);
+  }
+</style>
