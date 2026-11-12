@@ -6,6 +6,6 @@ import { SITE_URL } from './src/site.config.ts';
 export default defineConfig({
   site: SITE_URL,
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/thanks/') })],
   devToolbar: { enabled: false },
 });
