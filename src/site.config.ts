@@ -18,7 +18,7 @@ export const SITE = {
   /** 方形 logo（給搜尋引擎與結構化資料用） */
   logo: '/logo.png',
   /** Google Search Console 的 HTML 標記驗證碼，只填 content 裡的那串字；不用就留空 */
-  googleSiteVerification: '',
+  googleSiteVerification: '99lj0VbTWRg_bTed8ECMUjPTvpQ5p2LwldfVG_IstMg',
 
   newsletter: {
     title: '電子報',
