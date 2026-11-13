@@ -11,6 +11,7 @@
 - 聯絡信箱：chocodigesta@gmail.com，設定在 `src/site.config.ts`。
 - 網域：尚未決定。部署時自動使用 Netlify 提供的 `URL` 環境變數，備用值在 `src/site.config.ts`。
 - 封面圖放在 `src/assets/covers/`（不是 `public/covers/`），Astro 才能輸出 WebP 與多種尺寸。
+- 首頁「關於」改用消化餅提供的新文字（見 `src/site.config.ts` 的 `about`），同時作為首頁的搜尋說明；首頁 title 只用「金繕文庫 Kintsugi Bunko」。
 - 所有書頁的「書籍資料」都由資料自動產生，順序固定，包含「類別」一列。
 
 ## 品牌是什麼
@@ -167,5 +168,6 @@ Logo（直接用這段 SVG，旁邊接 Noto Serif TC 600 的「金繕文庫」�
 ## 工作方式
 
 - 開工前先讀完 `design/` 的四個頁面與截圖，再提出你的檔案結構規劃，等我確認後才開始寫。
-- 開發時用 `npm run dev` 在本機預覽，我確認畫面後才 commit 與 push。Netlify 每次部署都會消耗點數，請把修改累積起來一次部署，不要每改一處就 push。
+- 開發時用 `npm run dev` 在本機預覽。改完直接 commit 並 push 到開發分支，不用每次詢問（消化餅於 2026-11-13 指示）。
+- `main` 由消化餅手動合併，不要直接 push 到 `main`。Netlify 從 `main` 部署，每次部署都會消耗點數，修改請累積在開發分支。
 - 完成後提供一份簡短說明：怎麼新增一本書、怎麼換首頁主視覺的書、怎麼在本機預覽。

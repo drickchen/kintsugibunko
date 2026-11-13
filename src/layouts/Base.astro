@@ -1,43 +1,39 @@
 ---
 import '../styles/global.css';
-import { getImage } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { SITE } from '../site.config';
 
 interface Props {
+  /** 頁面標題；首頁不給，會用「金繕文庫 Kintsugi Bunko」 */
   title?: string;
   description: string;
   nav?: 'home' | 'book' | 'none';
-  /** 分享預覽圖；沒給就用 public/og-default.png */
-  ogImage?: ImageMetadata;
+  /** 分享預覽圖的路徑（1200 × 630）；沒給就用 public/og-default.png */
+  ogImage?: string;
   ogImageAlt?: string;
   ogType?: 'website' | 'book';
+  /** og:type 為 book 時的附加資訊 */
+  bookMeta?: { isbn?: string; author?: string; releaseDate?: string };
+  /** JSON-LD 字串，由 src/lib/seo.ts 的 graph() 產生 */
+  jsonLd?: string;
   noindex?: boolean;
 }
 const {
   title,
   description,
   nav = 'book',
-  ogImage,
-  ogImageAlt,
+  ogImage = '/og-default.png',
+  ogImageAlt = `${SITE.name} ${SITE.nameEn}`,
   ogType = 'website',
+  bookMeta,
+  jsonLd,
   noindex = false,
 } = Astro.props;
 
 const fullTitle = title ? `${title}｜${SITE.name}` : `${SITE.name} ${SITE.nameEn}`;
-const canonical = new URL(Astro.url.pathname, Astro.site);
-
-let og = { src: new URL('/og-default.png', Astro.site).href, width: 1200, height: 630 };
-if (ogImage) {
-  const img = await getImage({ src: ogImage, width: 800, format: 'jpg', quality: 85 });
-  og = {
-    src: new URL(img.src, Astro.site).href,
-    width: Number(img.attributes.width ?? 800),
-    height: Number(img.attributes.height ?? Math.round((800 * ogImage.height) / ogImage.width)),
-  };
-}
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageUrl = new URL(ogImage, Astro.site).href;
 ---
 
 <!doctype html>
@@ -47,8 +43,8 @@ if (ogImage) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    {SITE.googleSiteVerification && <meta name="google-site-verification" content={SITE.googleSiteVerification} />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
@@ -62,11 +58,18 @@ if (ogImage) {
     <meta property="og:title" content={title ?? fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={og.src} />
-    <meta property="og:image:width" content={String(og.width)} />
-    <meta property="og:image:height" content={String(og.height)} />
-    {ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
-    <meta name="twitter:card" content={ogImage ? 'summary' : 'summary_large_image'} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:type" content={ogImage.endsWith('.jpg') ? 'image/jpeg' : 'image/png'} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    {bookMeta?.isbn && <meta property="book:isbn" content={bookMeta.isbn.replaceAll('-', '')} />}
+    {bookMeta?.author && <meta property="book:author" content={bookMeta.author} />}
+    {bookMeta?.releaseDate && <meta property="book:release_date" content={bookMeta.releaseDate} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title ?? fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -74,7 +77,7 @@ if (ogImage) {
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&family=Noto+Sans+TC:wght@400;500&display=swap"
     />
-    <slot name="head" />
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </head>
   <body>
     <a class="skip-link" href="#main">跳到主要內容</a>
