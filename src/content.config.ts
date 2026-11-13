@@ -34,6 +34,8 @@ const books = defineCollection({
       cover_alt: z.string(),
 
       binding: z.string().optional(),
+      /** 給搜尋引擎的裝幀類型：Hardcover 精裝、Paperback 平裝 */
+      book_format: z.enum(['Hardcover', 'Paperback']).optional(),
       size: z.string().optional(),
       pages: z.number().optional(),
       entries: z.string().optional(),

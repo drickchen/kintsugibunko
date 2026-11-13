@@ -32,3 +32,20 @@ npm run dev
 ## 電子報
 
 表單使用 Netlify Forms，第一次部署後在 Netlify 後台的 Forms 頁面可以看到 `newsletter` 表單與收到的信箱。
+
+## SEO
+
+全部自動產生，新增書籍時只要把 frontmatter 的 `description`（搜尋結果下方那段說明，建議 60 至 100 字）和 `book_format`（`Hardcover` 精裝或 `Paperback` 平裝）填好。
+
+- 每頁都有 title、description、canonical 網址、Open Graph 與 Twitter 分享卡片。
+- 單書頁的分享預覽圖由 `src/pages/og/[slug].jpg.ts` 在建置時用封面自動合成（1200 × 630）。
+- 結構化資料（JSON-LD）在 `src/lib/seo.ts`：首頁是出版社與書目，單書頁是書籍（含 ISBN、定價、作者）與麵包屑。
+- `sitemap-index.xml` 與 `robots.txt` 自動產生，感謝頁與 404 不列入、也不給搜尋引擎索引。
+
+### 上線後要做一次的事
+
+1. 到 Google Search Console 新增資源，選「網址前置字元」，填網站網址。
+2. 驗證方式選「HTML 標記」，把 `content="..."` 裡的那串字貼到 `src/site.config.ts` 的 `googleSiteVerification`，部署後按驗證。
+3. 驗證成功後，在「Sitemap」頁面提交 `sitemap-index.xml`。
+
+換成正式網域時，記得重新提交一次。

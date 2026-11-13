@@ -10,11 +10,13 @@ featured: true
 
 hook: 史上第一本最ㄅㄧㄤˋ又最 LKK 的死語寶典。
 shelf_line: 那些年你打過、現在打了會被當成長輩的字。
+description: 史上第一本最ㄅㄧㄤˋ又最 LKK 的死語寶典。消化餅編，收錄兩百五十多條 BBS、即時通與 Call 機年代的過氣流行語，附錄十一篇、圖版二組，精裝燙金，金繕文庫出版。
 
 cover: ../../assets/covers/y2kdict.jpg
 cover_alt: 死語復興辭典書封：黑色皮革觸感精裝，書名燙金直排，右下角有磁碟片與沙漏圖樣
 
 binding: 精裝，皮革觸感書封燙金
+book_format: Hardcover
 size: 13 × 19 公分（32 開）
 pages: 671
 entries: 250 餘條詞目，附錄十一篇，圖版二組

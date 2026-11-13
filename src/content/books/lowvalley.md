@@ -9,11 +9,13 @@ featured: false
 
 hook: 沒資格灌你勵志毒雞湯，只有厭世厭自己和滿溢的理想主義之間的垂死掙扎。
 shelf_line: 教甄第七年落榜、集滿七個備取之後，寫給你的低谷導覽。
+description: 沒資格灌你勵志毒雞湯，只有厭世厭自己和滿溢的理想主義之間的垂死掙扎。消化餅的雜文集，教甄第七年落榜、集滿七個備取之後，寫給你的低谷導覽。文庫本與電子書販售中。
 
 cover: ../../assets/covers/lowvalley.jpg
 cover_alt: 人生低谷觀光指南書封：一個彎著腰、戴著耳機的男孩，背上站著一隻黑貓，書名以手寫字橫過畫面
 
 binding: 文庫本（二刷販售中）
+book_format: Paperback
 cover_design: Yuga Huang
 cover_design_url: https://www.behance.net/YugaHuang
 price: 300

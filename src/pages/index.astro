@@ -5,13 +5,16 @@ import BookCard from '../components/BookCard.astro';
 import ShelfPlaceholder from '../components/ShelfPlaceholder.astro';
 import NewsletterForm from '../components/NewsletterForm.astro';
 import { getBooks, getFeatured, nextNo } from '../lib/books';
+import { organizationLd, websiteLd, itemListLd, graph } from '../lib/seo';
 import { SITE } from '../site.config';
 
 const books = await getBooks();
 const featured = getFeatured(books);
+const jsonLd = graph(organizationLd(Astro.site!), websiteLd(Astro.site!), itemListLd(books, Astro.site!));
 ---
 
-<Base description={SITE.about} nav="home">
+<Base description={SITE.about} nav="home" jsonLd={jsonLd}>
+  <h1 class="visually-hidden">{SITE.name} {SITE.nameEn}</h1>
   <FeaturedBook book={featured} />
 
   <section id="books" class="container shelf" aria-labelledby="books-title">

@@ -6,7 +6,9 @@ import BuyBlock from '../../components/BuyBlock.astro';
 import SpecTable from '../../components/SpecTable.astro';
 import TocList from '../../components/TocList.astro';
 import AlsoOnShelf from '../../components/AlsoOnShelf.astro';
-import { getBooks, byline, dateLabel, specRows, type Book } from '../../lib/books';
+import { getBooks, byline, dateLabel, specRows, bookUrl, type Book } from '../../lib/books';
+import { getImage } from 'astro:assets';
+import { bookLd, breadcrumbLd, organizationLd, graph } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const books = await getBooks();
@@ -24,14 +26,30 @@ const { book, others } = Astro.props;
 const d = book.data;
 const { Content } = await render(book);
 const hasToc = d.toc.length > 0;
+
+const site = Astro.site!;
+const coverForLd = await getImage({ src: d.cover, width: 800, format: 'jpg', quality: 85 });
+const jsonLd = graph(
+  bookLd(book, site, new URL(coverForLd.src, site).href),
+  breadcrumbLd(
+    [
+      { name: '金繕文庫', path: '/' },
+      { name: d.title, path: bookUrl(book) },
+    ],
+    site,
+  ),
+  organizationLd(site),
+);
 ---
 
 <Base
-  title={d.title}
+  title={`${d.title}｜${byline(book)}`}
   description={d.description ?? d.hook}
-  ogImage={d.cover}
+  ogImage={`/og/${book.id}.jpg`}
   ogImageAlt={d.cover_alt}
   ogType="book"
+  bookMeta={{ isbn: d.isbn, author: d.author ?? d.editor, releaseDate: d.published }}
+  jsonLd={jsonLd}
 >
   <div class="book">
     <div class="book__cover-panel">

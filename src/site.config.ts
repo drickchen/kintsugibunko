@@ -12,8 +12,14 @@ export const SITE = {
   nameEn: 'Kintsugi Bunko',
   email: 'chocodigesta@gmail.com',
   year: 2026,
+  /** 首頁「關於」的文字，同時也是搜尋結果與分享卡片上的說明 */
   about:
-    '金繕文庫是消化餅在台北經營的一人出版社，出版那些把人的破綻看得一清二楚、讀著讀著又忍不住笑出來的書。',
+    '金繕文庫是一間台北的一人獨立出版社，為負責人消化餅把一些奇形怪狀的想法印成出版品的機構，以金繕為名，試圖用文字勾勒出萬事萬物中歪斜卻值得細細端詳的奇異之美。',
+  /** 方形 logo（給搜尋引擎與結構化資料用） */
+  logo: '/logo.png',
+  /** Google Search Console 的 HTML 標記驗證碼，只填 content 裡的那串字；不用就留空 */
+  googleSiteVerification: '',
+
   newsletter: {
     title: '電子報',
     lead: '新書與活動消息，不常寄。',
