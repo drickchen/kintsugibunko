@@ -23,6 +23,15 @@
   --tap: 44px;        /* 可點擊元素最小高度 */
   --button-h: 48px;
 
+  /* 字級：手機優先，桌機在下方另外設定 */
+  --fs-caption: 13px; /* 編號、小標籤、註記 */
+  --fs-small: 15px;   /* 書籍資料、目次、卡片說明、頁尾 */
+  --fs-ui: 16px;      /* 按鈕、選單 */
+  --fs-body: 17px;    /* 內文 */
+  --fs-lead: 20px;    /* 一句話推薦 */
+  --lh-body: 1.95;
+  --ls-body: 0.03em;  /* 內文字距，讓中文字之間留一點呼吸 */
+
   /* 陰影：只用在封面 */
   --shadow-cover-lg: 0 20px 44px rgba(31, 29, 26, 0.22);
   --shadow-cover-md: 0 10px 24px rgba(31, 29, 26, 0.14);
@@ -32,5 +41,15 @@
 @media (max-width: 599px) {
   :root {
     --gutter: 22px;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --fs-small: 14px;
+    --fs-ui: 15px;
+    --fs-body: 16px;
+    --fs-lead: 21px;
+    --lh-body: 1.9;
   }
 }

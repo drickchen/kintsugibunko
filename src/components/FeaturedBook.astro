@@ -24,7 +24,18 @@ const url = bookUrl(book);
       <div class="gold-rule" aria-hidden="true"></div>
       <p class="hero__hook">{d.hook}</p>
       {d.feature && <p class="hero__blurb">{d.feature.blurb}</p>}
-      {d.feature && <p class="hero__meta">{d.feature.meta}</p>}
+      {
+        d.feature && (
+          <p class="hero__meta">
+            {d.feature.meta.split('．').map((part, i) => (
+              <>
+                {i > 0 && '．'}
+                <span class="nowrap">{part}</span>
+              </>
+            ))}
+          </p>
+        )
+      }
       <div class="hero__actions">
         <Button href={url}>了解更多</Button>
         <Button href={`${url}#buy`} variant="underline">到獨立書店訂購</Button>
@@ -66,7 +77,7 @@ const url = bookUrl(book);
   }
 
   .hero__kicker {
-    font-size: 13px;
+    font-size: var(--fs-caption);
     line-height: 1.6;
     letter-spacing: 0.3em;
     color: var(--color-gold-text);
@@ -82,20 +93,21 @@ const url = bookUrl(book);
 
   .hero__hook {
     font-family: var(--font-serif);
-    font-size: 21px;
+    font-size: var(--fs-lead);
     line-height: 1.7;
     letter-spacing: 0.04em;
   }
 
   .hero__blurb {
     max-width: 30em;
-    font-size: 16px;
-    line-height: 1.9;
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls-body);
     color: var(--color-body);
   }
 
   .hero__meta {
-    font-size: 14px;
+    font-size: var(--fs-small);
     line-height: 1.8;
     letter-spacing: 0.06em;
     color: var(--color-muted);
@@ -109,8 +121,12 @@ const url = bookUrl(book);
     margin-top: 8px;
   }
 
+  .nowrap {
+    white-space: nowrap;
+  }
+
   .hero__note {
-    font-size: 13px;
+    font-size: var(--fs-caption);
     line-height: 1.8;
     letter-spacing: 0.08em;
     color: var(--color-muted);

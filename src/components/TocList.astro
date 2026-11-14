@@ -74,9 +74,9 @@ const id = `toc-${Math.random().toString(36).slice(2, 8)}`;
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: subgrid;
-    padding: 9px 0;
+    padding: 11px 0;
     border-bottom: 1px solid var(--color-rule);
-    font-size: 14px;
+    font-size: var(--fs-small);
     line-height: 1.6;
   }
 
@@ -100,12 +100,12 @@ const id = `toc-${Math.random().toString(36).slice(2, 8)}`;
   .toc__title {
     font-family: var(--font-serif);
     font-weight: 600;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.6;
   }
 
   .toc__desc {
-    font-size: 14px;
+    font-size: var(--fs-small);
     line-height: 1.8;
     color: var(--color-body);
   }
