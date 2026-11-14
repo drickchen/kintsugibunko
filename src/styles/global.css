@@ -19,9 +19,18 @@ body {
   background: var(--color-page);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.9;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   -webkit-font-smoothing: antialiased;
+  /* 中文排版細節：避免段落最後一行只剩一兩個字，標點不要落在行首 */
+  line-break: strict;
+  hanging-punctuation: allow-end;
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
 }
 
 main {
@@ -70,7 +79,7 @@ a:hover {
 
 /* 編號、小標籤 */
 .eyebrow {
-  font-size: 12px;
+  font-size: var(--fs-caption);
   line-height: 1.6;
   letter-spacing: 0.24em;
   color: var(--color-gold-text);
@@ -129,7 +138,7 @@ a:hover {
   padding: 18px 0 8px;
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.5;
   letter-spacing: 0.24em;
 }
