@@ -58,7 +58,7 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
     <meta property="og:site_name" content={`${SITE.name} ${SITE.nameEn}`} />
     <meta property="og:locale" content="zh_TW" />
     <meta property="og:type" content={ogType} />
-    <meta property="og:title" content={title ?? fullTitle} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
@@ -70,7 +70,7 @@ const ogImageUrl = new URL(ogImage, Astro.site).href;
     {bookMeta?.author && <meta property="book:author" content={bookMeta.author} />}
     {bookMeta?.releaseDate && <meta property="book:release_date" content={bookMeta.releaseDate} />}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title ?? fullTitle} />
+    <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
